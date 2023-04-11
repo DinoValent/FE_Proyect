@@ -11,6 +11,11 @@ import { VerContactoComponent } from './components/ver-contacto/ver-contacto.com
 //Angular Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -23,6 +28,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     BrowserModule,
     BrowserAnimationsModule,
     MatSlideToggleModule, //en el import van los modulos
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
