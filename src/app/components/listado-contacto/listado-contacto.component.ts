@@ -29,6 +29,30 @@ const Agenda_Contactos: Contacto[] = [
     email: 'sargentomr@gmail.com',
     favorite: false,
   },
+  {
+    name: 'Pepito',
+    celularNumber: 142125,
+    email: 'affdasg',
+    favorite: true,
+  },
+  {
+    name: 'Lacha',
+    celularNumber: 913459123581,
+    email: 'lacha@gmail.com',
+    favorite: false,
+  },
+  {
+    name: 'Ricardo',
+    celularNumber: 182484182,
+    email: 'minombreesricardo@gmail.com',
+    favorite: true,
+  },
+  {
+    name: 'nash',
+    celularNumber: 1294194120,
+    email: 'gerovirgen@gmail.com',
+    favorite: false,
+  },
 ];
 @Component({
   selector: 'app-listado-contacto', //para renderizar los componentes tenemos que utilizar el selector
@@ -36,7 +60,13 @@ const Agenda_Contactos: Contacto[] = [
   styleUrls: ['./listado-contacto.component.css'],
 })
 export class ListadoContactoComponent implements AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'celularNumber', 'email', 'favorite'];
+  displayedColumns: string[] = [
+    'nombre',
+    'celularNumber',
+    'email',
+    'favorite',
+    'acciones',
+  ];
   dataSource = new MatTableDataSource<Contacto>(Agenda_Contactos);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
