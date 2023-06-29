@@ -1,0 +1,19 @@
+<div class="title">
+  <h1>Iniciar Sesion</h1>
+</div>
+<div *ngIf="contacto != null" class="container">
+  <app-spinner *ngIf="loading == true"></app-spinner>
+  <mat-card class="card">
+    <mat-card-title>{{ contacto.nombre }}</mat-card-title>
+    <mat-card-content>
+      <p><strong>Celular:</strong> {{ contacto.celularNumber }}</p>
+      <p><strong>email:</strong> {{ contacto.email }}</p>
+      <!-- <p><strong>Favorito:</strong> 1</p> -->
+    </mat-card-content>
+    <mat-card-actions>
+      <button routerLink="/listado-contacto" mat-raised-button>Volver</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<!-- *ngIf="contacto$ | async as contacto"  PIPE ASYNC-->
+<!-- <button routerLink="/ver-contacto/2" mat-raised-button>Cambiar ID</button> -->

@@ -7,9 +7,9 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
 // Componentes
-import { AgregarEditarContactoComponent } from './components/agregar-editar-contacto/agregar-editar-contacto.component';
-import { ListadoContactoComponent } from './components/listado-contacto/listado-contacto.component';
-import { VerContactoComponent } from './components/ver-contacto/ver-contacto.component';
+import { AgregarEditarContactoComponent } from './pages/agregar-editar-contacto/agregar-editar-contacto.component';
+import { ListadoContactoComponent } from './pages/listado-contacto/listado-contacto.component';
+import { VerContactoComponent } from './pages/ver-contacto/ver-contacto.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
