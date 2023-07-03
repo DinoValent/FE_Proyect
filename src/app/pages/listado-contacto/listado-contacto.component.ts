@@ -21,6 +21,7 @@ export class ListadoContactoComponent implements AfterViewInit {
   ];
   dataSource = new MatTableDataSource<Contacto>();
   loading: boolean = false;
+  operacion: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,6 +33,9 @@ export class ListadoContactoComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.obtenerContactos();
+  }
+  toggleFavorito(contacto: any) {
+    contacto.favorito = !contacto.favorito;
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

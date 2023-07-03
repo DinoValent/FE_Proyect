@@ -31,6 +31,13 @@ export class ContactoService {
       contacto
     );
   }
+
+  updateContacto(id: number, contacto: Contacto): Observable<void> {
+    return this.http.put<void>(
+      `${this.myAppUrl}${this.myApiUrl}${id}`,
+      contacto
+    );
+  }
 }
 
 //Los servicios los utilizamos para 3 cosas, para hacer la peticion a algun backend (este es el caso)
