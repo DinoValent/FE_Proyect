@@ -5,8 +5,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListadoContactoComponent } from './pages/listado-contacto/listado-contacto.component';
 import { AgregarEditarContactoComponent } from './pages/agregar-editar-contacto/agregar-editar-contacto.component';
 import { VerContactoComponent } from './pages/ver-contacto/ver-contacto.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
+  { path: 'login', pathMatch: 'full', component: LoginComponent },
+  { path: 'register', pathMatch: 'full', component: RegisterComponent },
   { path: '', redirectTo: 'listado-contacto', pathMatch: 'full' },
   {
     path: 'ver-contacto/:id',

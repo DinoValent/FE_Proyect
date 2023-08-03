@@ -30,3 +30,9 @@ th {
   color: yellow;
   cursor: pointer;
 }
+
+.button-left {
+  background-color: red;
+  color: white;
+  margin-right: 1700px;
+}

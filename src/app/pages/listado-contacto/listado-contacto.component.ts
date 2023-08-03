@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Contacto } from 'src/app/interfaces/contacto';
-import { ContactoService } from 'src/app/services/contacto.service';
+import { Contact } from 'src/app/interfaces/contact';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-listado-contacto', //para renderizar los componentes tenemos que utilizar el selector
@@ -13,13 +13,13 @@ import { ContactoService } from 'src/app/services/contacto.service';
 })
 export class ListadoContactoComponent implements AfterViewInit {
   displayedColumns: string[] = [
-    'nombre',
-    'celularNumber',
+    'name',
+    'phone',
     'email',
-    'favorite',
-    'acciones',
+    'isFavourite',
+    'actions',
   ];
-  dataSource = new MatTableDataSource<Contacto>();
+  dataSource = new MatTableDataSource<Contact>();
   loading: boolean = false;
   operacion: boolean = false;
 
@@ -28,14 +28,33 @@ export class ListadoContactoComponent implements AfterViewInit {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private _contactoService: ContactoService
+    private _contactService: ContactService
   ) {} //aca se hace la inyeccion de dependencia
 
   ngOnInit(): void {
-    this.obtenerContactos();
+    this.obtenerContacts();
   }
-  toggleFavorito(contacto: any) {
-    contacto.favorito = !contacto.favorito;
+  toggleFavourite(contact: Contact) {
+    contact.isFavourite = !contact.isFavourite;
+
+    this._contactService.updateContact(contact).subscribe({
+      complete: () => {
+        console.log(contact);
+        // Aquí puedes agregar la lógica para actualizar la página o refrescar los datos.
+      },
+    });
+  }
+
+  moveContactUp(contact: Contact) {
+    this._contactService.moveContactUp(contact.id as number).subscribe(() => {
+      this.obtenerContacts();
+    });
+  }
+
+  moveContactDown(contact: Contact) {
+    this._contactService.moveContactDown(contact.id as number).subscribe(() => {
+      this.obtenerContacts();
+    });
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -52,9 +71,9 @@ export class ListadoContactoComponent implements AfterViewInit {
   //Siempre que creamos un observable nos tenemos que subscribir y desuscribir
   //Pero en las peticiones Http lo hace por nosotros
 
-  obtenerContactos() {
+  obtenerContacts() {
     this.loading = true;
-    this._contactoService.getContactos().subscribe({
+    this._contactService.getContacts().subscribe({
       next: (data) => {
         this.loading = false;
         this.dataSource.data = data;
@@ -67,13 +86,13 @@ export class ListadoContactoComponent implements AfterViewInit {
     });
   }
 
-  eliminarContacto(id: number) {
+  eliminarContact(id: number) {
     this.loading = true;
 
-    this._contactoService.deleteContacto(id).subscribe(() => {
+    this._contactService.deleteContact(id).subscribe(() => {
       this.mensajeExito();
       this.loading = false;
-      this.obtenerContactos();
+      this.obtenerContacts();
     });
   }
 

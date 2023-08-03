@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Contacto } from 'src/app/interfaces/contacto';
-import { ContactoService } from 'src/app/services/contacto.service';
+import { Contact } from 'src/app/interfaces/contact';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-agregar-editar-contacto',
@@ -19,15 +19,15 @@ export class AgregarEditarContactoComponent {
 
   constructor(
     private fb: FormBuilder,
-    private _contactoService: ContactoService,
+    private _contactService: ContactService,
     private _snackBar: MatSnackBar,
     private router: Router,
     private aRoute: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      nombre: ['', Validators.required],
-      mail: ['', Validators.required],
-      celularNumber: ['', Validators.required],
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      phone: ['', Validators.required],
     });
 
     this.id = Number(this.aRoute.snapshot.paramMap.get('id'));
@@ -36,53 +36,53 @@ export class AgregarEditarContactoComponent {
   ngOnInit(): void {
     if (this.id != 0) {
       this.operacion = 'Editar';
-      this.obtenerContacto(this.id);
+      this.getContact(this.id);
     }
   }
 
-  obtenerContacto(id: number) {
-    this._contactoService.getContacto(id).subscribe((data) => {
+  getContact(id: number) {
+    this._contactService.getContact(id).subscribe((data) => {
       this.form.setValue({
-        nombre: data.nombre,
-        mail: data.email,
-        celularNumber: data.celularNumber,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
       });
       this.loading = false;
     });
   }
 
-  agregarEditarContacto() {
+  addEditContact() {
     // Objeto armado
-    const contacto: Contacto = {
-      nombre: this.form.value.nombre,
-      celularNumber: this.form.value.celularNumber,
-      email: this.form.value.mail,
+    const contact: Contact = {
+      name: this.form.value.name,
+      phone: this.form.value.phone,
+      email: this.form.value.email,
     };
 
     if (this.id != 0) {
-      contacto.id = this.id;
-      this.editarContacto(this.id, contacto);
+      contact.id = this.id;
+      this.editContact(contact);
     } else {
-      this.agregarContacto(contacto);
+      this.addContact(contact);
     }
   }
-  editarContacto(id: number, contacto: Contacto) {
-    this._contactoService.updateContacto(id, contacto).subscribe(() => {
+  editContact(contact: Contact) {
+    this._contactService.updateContact(contact).subscribe(() => {
       this.loading = false;
-      this.mensajeExito('actualizado');
+      this.promptSuccessMessage('actualizado');
       this.router.navigate(['/listado-contacto']);
     });
   }
 
-  agregarContacto(contacto: Contacto) {
+  addContact(contact: Contact) {
     //Enviamos el contacto al Back
-    this._contactoService.addContacto(contacto).subscribe((data) => {
-      this.mensajeExito('registrado');
+    this._contactService.addContact(contact).subscribe((data) => {
+      this.promptSuccessMessage('registrado');
       this.router.navigate(['/listado-contacto']);
     });
   }
 
-  mensajeExito(text: string) {
+  promptSuccessMessage(text: string) {
     this._snackBar.open(`El contacto fue ${text} con exito`, '', {
       duration: 4000,
       horizontalPosition: 'right',

@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Contacto } from 'src/app/interfaces/contacto';
-import { ContactoService } from 'src/app/services/contacto.service';
+import { Contact } from 'src/app/interfaces/contact';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-ver-contacto',
@@ -11,13 +10,13 @@ import { ContactoService } from 'src/app/services/contacto.service';
 })
 export class VerContactoComponent implements OnInit /*OnDestroy*/ {
   id: number;
-  contacto!: Contacto;
+  contact!: Contact;
   loading: boolean = false;
 
   // contacto$!: Observable<Contacto>; --PIPE ASYNC
   // routeSub!: Subscription;
   constructor(
-    private _contactoService: ContactoService,
+    private _contactoService: ContactService,
     private aRoute: ActivatedRoute
   ) {
     this.id = Number(this.aRoute.snapshot.paramMap.get('id')); //Obtenemos el ID por ruta
@@ -30,17 +29,17 @@ export class VerContactoComponent implements OnInit /*OnDestroy*/ {
     //   this.id = data['id'];
     //   this.obtenerContacto();
     // });
-    this.obtenerContacto();
+    this.obtenerContact();
   }
 
   /*ngOnDestroy(): void {
     this.routeSub.unsubscribe();
   }*/
 
-  obtenerContacto() {
+  obtenerContact() {
     this.loading = true;
-    this._contactoService.getContacto(this.id).subscribe((data) => {
-      this.contacto = data;
+    this._contactoService.getContact(this.id).subscribe((data) => {
+      this.contact = data;
       this.loading = false;
     });
   }
